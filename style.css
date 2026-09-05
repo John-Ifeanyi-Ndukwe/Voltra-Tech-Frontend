@@ -27,19 +27,96 @@ img {
 }
 
 /* ===== Header / Nav ===== */
+/* ===== HEADER / NAV - DARK VERSION FOR ALL PAGES ===== */
 header {
-  background: #f2efe9;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  position: sticky;
+  background: #0a3d2a96 !important; /* Dark navy */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.726);
+  position: fixed !important; /* Not sticky */
   top: 0;
-  z-index: 100;
-  max-width: 100%;
-  margin: 0 auto;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
+}
+
+header a, header button {
+  color: #ffffff !important; /* Make nav text white */
+}
+
+/* ===== Floating WhatsApp Button ===== */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: whatsapp-pulse 2s infinite;
+}
+
+.floating-whatsapp:hover {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+}
+
+.floating-whatsapp:active {
+  transform: translateY(-1px) scale(0.96);
+}
+
+.floating-whatsapp svg {
+  width: 32px;
+  height: 32px;
+  fill: #ffffff;
+  pointer-events: none;
+}
+
+/* Pulse animation */
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+  }
+ 70% {
+    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+  }
+ 100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 700px) {
+  .floating-whatsapp {
+    width: 52px;
+    height: 52px;
+    bottom: 18px;
+    right: 18px;
+  }
+
+  .floating-whatsapp svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .floating-whatsapp {
+    animation: none;
+  }
+  
+  .floating-whatsapp:hover {
+    transform: none;
+  }
 }
 
 .logo {
@@ -64,7 +141,7 @@ header {
   display: block;
   font-weight: 800;
   font-size: 1rem;
-  color: #1a1a1a;
+  color: #FFFFFF;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -76,6 +153,64 @@ header {
   color: #444;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .logo-text .name {
+    font-size: 13px;  /* smaller on phone so it doesn't wrap */
+  }
+  .logo-text .tagline {
+    font-size: 9px;
+  }
+} 
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  height: 2.5px;
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger:hover span {
+  background: #333;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex !important;
+  }
+
+  nav {
+    display: none;        /* hide the buttons by default */
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #111;     /* match your header */
+    width: 100%;
+    padding: 1rem;
+  }
+
+  nav.active {
+    display: flex;
+  }
 }
 
 nav {
@@ -376,6 +511,264 @@ footer#contact,
   letter-spacing: 0.08em;
 }
 
+/* ===== Contact Section ===== */
+#contact {
+  position: relative;
+  padding: clamp(70px, 10vw, 110px) 20px;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(145, 70, 255, 0.18),
+      transparent 45%
+    ),
+    linear-gradient(135deg, #080808 0%, #111111 50%, #080808 100%);
+  text-align: center;
+  color: #f5f5f5;
+  overflow: hidden;
+}
+
+/* Purple Ambient Glow */
+#contact::before {
+  content: "";
+  position: absolute;
+  width: clamp(220px, 35vw, 400px);
+  height: clamp(220px, 35vw, 400px);
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(145, 70, 255, 0.18);
+  filter: blur(100px);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Futuristic Grid */
+#contact::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+  background-size: 45px 45px;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* ===== Contact Card ===== */
+.contact-container {
+  position: relative;
+  z-index: 2;
+
+  width: min(750px, 100%);
+  margin: 0 auto;
+
+  padding:
+    clamp(35px, 6vw, 55px)
+    clamp(20px, 5vw, 35px);
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(145, 70, 255, 0.25);
+  border-radius: 20px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 0 40px rgba(145, 70, 255, 0.08),
+    inset 0 0 30px rgba(255, 255, 255, 0.02);
+}
+
+/* ===== Heading ===== */
+#contact h2 {
+  position: relative;
+
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+
+  margin-bottom: 18px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 20px rgba(145, 70, 255, 0.35);
+}
+
+/* Glowing Line */
+#contact h2::after {
+  content: "";
+
+  display: block;
+
+  width: clamp(55px, 10vw, 75px);
+  height: 4px;
+
+  margin: 16px auto 0;
+
+  background: linear-gradient(
+    90deg,
+    #772CE8,
+    #9146FF,
+    #b47aff
+  );
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 0 15px rgba(145, 70, 255, 0.8);
+}
+
+/* ===== Description ===== */
+#contact p {
+  max-width: 580px;
+
+  margin: 0 auto 30px;
+
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.8;
+
+  color: #bdbdbd;
+}
+
+/* ===== Contact Button ===== */
+.contact-btn {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 180px;
+
+  padding: 15px 34px;
+
+  background: linear-gradient(
+    135deg,
+    #9146FF,
+    #772CE8
+  );
+
+  color: #ffffff;
+
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+
+  text-decoration: none;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 25px rgba(145, 70, 255, 0.3);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+/* Button Shine */
+.contact-btn::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 70%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 0.6s ease;
+}
+
+.contact-btn:hover::before {
+  left: 140%;
+}
+
+/* Button Hover */
+.contact-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+
+  background: linear-gradient(
+    135deg,
+    #a968ff,
+    #9146FF
+  );
+
+  box-shadow:
+    0 12px 35px rgba(145, 70, 255, 0.45),
+    0 0 25px rgba(145, 70, 255, 0.25);
+
+  color: #ffffff;
+}
+
+/* Button Click */
+.contact-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Keyboard Accessibility */
+.contact-btn:focus-visible {
+  outline: 2px solid #b47aff;
+  outline-offset: 5px;
+}
+
+/* ===== Extra Small Screens ===== */
+@media (max-width: 400px) {
+  #contact {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .contact-container {
+    border-radius: 16px;
+  }
+
+  .contact-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .contact-btn,
+  .contact-btn::before {
+    transition: none;
+  }
+
+  .contact-btn:hover {
+    transform: none;
+  }
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 1024px) and (min-width: 701px) {
   header {
@@ -458,5 +851,171 @@ footer#contact,
 
   .projects > div {
     min-height: 160px;
+  }
+}
+
+/* Desktop - show normal nav, hide hamburger */
+.hamburger {
+  display: none;
+}
+
+nav button,
+nav a {
+  display: inline-block;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex !important;
+  }
+
+  nav {
+    display: none !important;          /* hide the whole nav by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #111;
+    flex-direction: column;
+    padding: 1.5rem;
+    z-index: 1000;
+  }
+
+  nav.active {
+    display: flex !important;          /* show the nav when active */
+  }
+
+  nav button,
+  nav a {
+    display: block !important;
+    width: 100%;
+    text-align: left;
+    padding: 12px 0;
+    color: white;
+    background: none;
+    border: none;
+  }
+}
+
+/* PILLAR CARDS STYLE */
+.page-title {
+  text-align: center;
+  padding: 60px 20px 20px;
+  background: #0a1a2f;
+  color: #fff;
+}
+.page-title h1 { font-size: 32px; margin-bottom: 10px; }
+
+.pillars-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pillar-card {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.pillar-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  color: #fff;
+}
+
+.pillar-number {
+  color: #FFA500; /* orange like screenshot */
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.pillar-overlay h2 {
+  font-size: 28px;
+  margin: 8px 0 12px;
+}
+
+.pillar-line {
+  width: 60px;
+  height: 3px;
+  background: #FFA500;
+  margin-bottom: 20px;
+}
+
+.explore-btn {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.explore-btn:hover { text-decoration: underline; }
+
+/* Map + Contact */
+.map-container { margin-top: 30px; border-radius: 12px; overflow: hidden; }
+.map-button { display: inline-block; margin-top: 10px; padding: 8px 15px; background: #25D366; color: #fff; border-radius: 5px; text-decoration: none; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .pillar-card { height: 300px; }
+  .pillar-overlay h2 { font-size: 22px; }
+}
+
+.whatsapp-float {
+  width: 60px !important;
+  height: 60px !important;
+  background: #25D366 !important;
+}
+.whatsapp-float svg {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+/* ===== WHATSAPP BUTTON FIX ===== */
+.whatsapp-float {
+  position: fixed !important;   /* makes it float */
+  bottom: 20px !important;      /* distance from bottom */
+  right: 20px !important;       /* distance from right */
+  width: 60px !important;
+  height: 60px !important;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: whatsapp-pulse 2s infinite;
+}
+.whatsapp-float { 
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+ 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+ 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .floating-whatsapp {
+    animation: none;
+  }
+  
+  .floating-whatsapp:hover {
+    transform: none;
   }
 }

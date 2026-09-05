@@ -1,132 +1,334 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== Mobile menu (safe if markup is added later) =====
-  const menuToggle = document.querySelector(".menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
+  "use strict";
 
-  if (menuToggle && navLinks) {
-    menuToggle.setAttribute("aria-label", "Toggle navigation menu");
-    menuToggle.setAttribute("aria-expanded", "false");
+  /* =========================
+     HAMBURGER MENU
+  ========================= */
 
-    menuToggle.addEventListener("click", () => {
-      const isOpen = navLinks.classList.toggle("open");
-      menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  const hamburger = document.getElementById("hamburger");
+  const nav = document.getElementById("nav");
+
+  if (hamburger && nav) {
+    hamburger.setAttribute("aria-expanded", "false");
+    hamburger.setAttribute("aria-controls", nav.id || "nav");
+
+    const closeMenu = () => {
+      nav.classList.remove("active");
+      hamburger.classList.remove("open");
+      hamburger.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    };
+
+    const toggleMenu = () => {
+      const isOpen = nav.classList.toggle("active");
+
+      hamburger.classList.toggle("open", isOpen);
+      hamburger.setAttribute("aria-expanded", String(isOpen));
+
+      document.body.style.overflow = isOpen ? "hidden" : "";
+    };
+
+    hamburger.addEventListener("click", toggleMenu);
+
+    nav.querySelectorAll("a, button").forEach((item) => {
+      item.addEventListener("click", closeMenu);
     });
 
-    navLinks.querySelectorAll("a, button").forEach((link) => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-      });
+    document.addEventListener("click", (event) => {
+      if (
+        nav.classList.contains("active") &&
+        !nav.contains(event.target) &&
+        !hamburger.contains(event.target)
+      ) {
+        closeMenu();
+      }
     });
 
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 700) {
-        navLinks.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        nav.classList.contains("active")
+      ) {
+        closeMenu();
+        hamburger.focus();
       }
     });
   }
 
-  // ===== Smooth scroll for header buttons =====
-  window.scrollToId = function scrollToId(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  /* =========================
+     SMOOTH SCROLL
+  ========================= */
+
+  const scrollToId = (id) => {
+    if (typeof id !== "string" || !id.trim()) {
+      return;
+    }
+
+    const element = document.getElementById(id.trim());
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
   };
 
-  // ===== Hero slideshow =====
-  const slides = Array.from(document.querySelectorAll("#hero .slide"));
-  const dotsWrap = document.getElementById("dots") || document.querySelector(".dots");
-  const counter = document.querySelector(".hero-counter");
-  const labels = slides.map((slide, i) => {
-    const heading = slide.querySelector("h1");
-    return heading ? heading.textContent.replace(/\s+/g, " ").trim() : "Slide " + (i + 1);
-  });
+  document
+    .querySelectorAll("[data-scroll-to]")
+    .forEach((element) => {
+      element.addEventListener("click", (event) => {
+        const targetId = element.getAttribute("data-scroll-to");
 
-  let index = Math.max(0, slides.findIndex((s) => s.classList.contains("active")));
-  let timer = null;
+        if (!targetId) {
+          return;
+        }
 
-  function imageSrc(slide) {
-    const dataSrc = slide.getAttribute("data-src");
-    if (dataSrc) return dataSrc;
-    const bg = slide.style.backgroundImage || "";
-    const match = bg.match(/url\(["']?(.+?)["']?\)/);
-    return match ? match[1] : "";
-  }
-
-  function show(next) {
-    if (!slides.length) return;
-    slides[index].classList.remove("active");
-    index = (next + slides.length) % slides.length;
-    slides[index].classList.add("active");
-
-    if (counter) {
-      const n = String(index + 1).padStart(2, "0");
-      const total = String(slides.length).padStart(2, "0");
-      counter.innerHTML =
-        "<strong>" + n + "</strong> / " + total + " — " + labels[index];
-    }
-
-    if (dotsWrap) {
-      dotsWrap.querySelectorAll(".dot").forEach((dot, i) => {
-        dot.classList.toggle("active", i === index);
-        dot.setAttribute("aria-selected", i === index ? "true" : "false");
+        event.preventDefault();
+        scrollToId(targetId);
       });
-    }
+    });
+
+  /* =========================
+     HERO SLIDER
+  ========================= */
+
+  const hero = document.getElementById("hero");
+
+  if (!hero) {
+    return;
   }
 
-  function startTimer() {
-    stopTimer();
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    timer = window.setInterval(() => show(index + 1), 4000);
-  }
+  const slides = Array.from(
+    hero.querySelectorAll(".slide")
+  );
 
-  function stopTimer() {
-    if (timer) {
-      window.clearInterval(timer);
-      timer = null;
-    }
-  }
-
+  // Set background images from data-src attribute
   slides.forEach((slide) => {
     const src = slide.getAttribute("data-src");
-    if (src) slide.style.backgroundImage = 'url("' + src + '")';
+    if (src) slide.style.backgroundImage = `url("${src}")`;
   });
 
+  const dotsWrap = document.getElementById("dots");
+
+  if (!slides.length) {
+    return;
+  }
+
+  /* =========================
+     STARTING SLIDE
+  ========================= */
+
+  let currentIndex = slides.findIndex((slide) => {
+    return slide.classList.contains("active");
+  });
+
+  if (currentIndex === -1) {
+    currentIndex = 0;
+    slides[0].classList.add("active");
+  }
+
+  /* =========================
+     REDUCED MOTION
+  ========================= */
+
+  const motionQuery = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+
+  /* =========================
+     SLIDE FUNCTION
+  ========================= */
+
+  const showSlide = (newIndex) => {
+    slides[currentIndex].classList.remove("active");
+
+    currentIndex = newIndex;
+
+    if (currentIndex >= slides.length) {
+      currentIndex = 0;
+    }
+
+    if (currentIndex < 0) {
+      currentIndex = slides.length - 1;
+    }
+
+    slides[currentIndex].classList.add("active");
+
+    updateDots();
+  };
+
+  /* =========================
+     NEXT SLIDE
+  ========================= */
+
+  const nextSlide = () => {
+    showSlide(currentIndex + 1);
+  };
+
+  /* =========================
+     DOTS
+  ========================= */
+
+  const updateDots = () => {
+    if (!dotsWrap) {
+      return;
+    }
+
+    const dots = dotsWrap.querySelectorAll(".dot");
+
+    dots.forEach((dot, index) => {
+      const isActive = index === currentIndex;
+
+      dot.classList.toggle("active", isActive);
+
+      dot.setAttribute(
+        "aria-selected",
+        String(isActive)
+      );
+    });
+  };
+
   if (dotsWrap) {
-    dotsWrap.innerHTML = "";
-    slides.forEach((_, i) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "dot" + (i === index ? " active" : "");
-      btn.setAttribute("aria-label", "Show " + labels[i]);
-      btn.setAttribute("aria-selected", i === index ? "true" : "false");
-      btn.addEventListener("click", () => {
-        show(i);
-        startTimer();
+    dotsWrap.replaceChildren();
+
+    slides.forEach((slide, index) => {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "dot";
+
+      if (index === currentIndex) {
+        button.classList.add("active");
+      }
+
+      button.setAttribute(
+        "aria-label",
+        `Show slide ${index + 1}`
+      );
+
+      button.setAttribute(
+        "aria-selected",
+        String(index === currentIndex)
+      );
+
+      button.addEventListener("click", () => {
+        showSlide(index);
+        restartSlider();
       });
-      dotsWrap.appendChild(btn);
+
+      dotsWrap.appendChild(button);
     });
   }
 
-  Promise.all(
-    slides.map((slide) => {
-      return new Promise((resolve) => {
-        const src = imageSrc(slide);
-        if (!src) return resolve();
-        const img = new Image();
-        img.onload = () => resolve();
-        img.onerror = () => resolve();
-        img.src = src;
-      });
-    })
-  ).then(startTimer);
+  /* =========================
+     AUTOMATIC SLIDER
+  ========================= */
 
-  // ===== Fix mobile 100vh =====
-  const setViewportHeight = () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", vh + "px");
+  let sliderTimer = null;
+
+  const stopSlider = () => {
+    if (sliderTimer !== null) {
+      window.clearInterval(sliderTimer);
+      sliderTimer = null;
+    }
   };
+
+  const startSlider = () => {
+    stopSlider();
+
+    if (motionQuery.matches) {
+      return;
+    }
+
+    sliderTimer = window.setInterval(() => {
+      nextSlide();
+    }, 4000);
+  };
+
+  const restartSlider = () => {
+    startSlider();
+  };
+
+  /* =========================
+     REDUCED MOTION CHANGE
+  ========================= */
+
+  const handleMotionChange = () => {
+    if (motionQuery.matches) {
+      stopSlider();
+    } else {
+      startSlider();
+    }
+  };
+
+  if (typeof motionQuery.addEventListener === "function") {
+    motionQuery.addEventListener(
+      "change",
+      handleMotionChange
+    );
+  }
+
+  /* =========================
+     PAUSE WHEN TAB IS HIDDEN
+  ========================= */
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+      if (document.hidden) {
+        stopSlider();
+      } else {
+        startSlider();
+      }
+    }
+  );
+
+  /* =========================
+     MOBILE VIEWPORT HEIGHT
+  ========================= */
+
+  let viewportTimer = null;
+
+  const setViewportHeight = () => {
+    const viewportHeight = window.innerHeight * 0.01;
+
+    document.documentElement.style.setProperty(
+      "--vh",
+      `${viewportHeight}px`
+    );
+  };
+
+  const updateViewportHeight = () => {
+    if (viewportTimer !== null) {
+      window.clearTimeout(viewportTimer);
+    }
+
+    viewportTimer = window.setTimeout(() => {
+      setViewportHeight();
+      viewportTimer = null;
+    }, 150);
+  };
+
   setViewportHeight();
-  window.addEventListener("resize", setViewportHeight);
-  window.addEventListener("orientationchange", setViewportHeight);
+
+  window.addEventListener(
+    "resize",
+    updateViewportHeight,
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "orientationchange",
+    updateViewportHeight,
+    { passive: true }
+  );
+
+  /* =========================
+     START SLIDER
+  ========================= */
+
+  updateDots();
+  startSlider();
+
 });

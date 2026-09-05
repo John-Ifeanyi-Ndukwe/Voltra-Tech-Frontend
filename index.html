@@ -7,25 +7,31 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<!--Header-->
+
+  <!-- ================= HEADER ================= -->
   <header>
-  <div class="logo">
-    <img src="./logo.jpg" alt="Voltra-tech">
-    <div class="logo-text">
-      <span class="name">Voltra-tech</span>
-      <span class="tagline">EST. 2022</span>
+    <div class="logo">
+      <img src="./logo.jpg" alt="Voltra-tech">
+      <div class="logo-text">
+        <span class="name">VOLTRATECH NIGERIA LIMITED</span>
+        <span class="tagline"></span>
+      </div>
     </div>
-  </div>
 
-  <nav>
-    <button type="button" onclick="scrollToId('services')">SERVICES</button>
-    <button type="button" onclick="scrollToId('projects')">PROJECTS</button>
-    <button type="button" onclick="scrollToId('contact')">CONTACT</button>
-  </nav>
-</header>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Toggle Menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
 
+    <nav id="nav">
+      <button type="button" data-scroll-to="services">SERVICES</button>
+      <a href="project.html">PROJECTS</a>  <!-- only this one links out -->
+      <button type="button" data-scroll-to="contact">CONTACT</button>
+    </nav>
+  </header>
+
+  <!-- ================= HERO ================= -->
   <div id="hero">
-    <div class="slide active" style="background-image: url('./background/background1.jpeg')">
+    <div class="slide active" data-src="./background/background1.jpeg">
       <div class="overlay"></div>
       <div class="content">
         <h1>Powering The Future<br>With Precision Drilling</h1>
@@ -33,7 +39,7 @@
       </div>
     </div>
 
-    <div class="slide" style="background-image: url('./background/background2.jpeg')">
+    <div class="slide" data-src="./background/background2.jpeg">
       <div class="overlay"></div>
       <div class="content">
         <h1>Geo-technical Survey Site</h1>
@@ -41,7 +47,7 @@
       </div>
     </div>
 
-    <div class="slide" style="background-image: url('./background/background3.jpeg')">
+    <div class="slide" data-src="./background/background3.jpeg">
       <div class="overlay"></div>
       <div class="content">
         <h1>Geo-technical Mining</h1>
@@ -49,7 +55,7 @@
       </div>
     </div>
 
-    <div class="slide" style="background-image: url('./background/background4.jpeg')">
+    <div class="slide" data-src="./background/background4.jpeg">
       <div class="overlay"></div>
       <div class="content">
         <h1>Water Treatment Facility</h1>
@@ -57,68 +63,132 @@
       </div>
     </div>
 
-    <div class="slide" style="background-image: url('./background/background5.jpeg')">
+    <div class="slide" data-src="./background/background5.jpeg">
       <div class="overlay"></div>
       <div class="content">
-        <h1>Heavy Equipment Deployment and mining services</h1>
-        <p>Geo-science mining,Engineering and environmental services.</p>
+        <h1>Heavy Equipment Deployment and Mining Services</h1>
+        <p>Geo-science mining, Engineering and environmental services.</p>
       </div>
     </div>
 
     <div class="dots" id="dots"></div>
   </div>
-<!--service section-->
+
+  <!-- ================= SERVICES ================= -->
   <section id="services">
     <h2>SERVICES</h2>
     <div class="grid">
-      <div class="card">
-        <h3>Borehole Drilling</h3>
-        <p>0-450M / ±2CM</p>
-      </div>
-      <div class="card">
-        <h3>Geo-technical Survey</h3>
-        <p>ISO 14688 / 48HR REPORT</p>
-      </div>
-      <div class="card">
-        <h3>Water Treatment</h3>
-        <p>20K LPH / SOLAR READY</p>
-      </div>
-      <div class="card">
-        <h3>Mining services</h3>
-        <p>Underground mining, material transport and mineral transportation</p>
-      </div>
+      <div class="card"><h3>Borehole Drilling</h3><p>0-450M / ±2CM</p></div>
+      <div class="card"><h3>Geo-technical Survey</h3><p>ISO 14688 / 48HR REPORT</p></div>
+      <div class="card"><h3>Water Treatment</h3><p>20K LPH / SOLAR READY</p></div>
+      <div class="card"><h3>Mining Services</h3><p>Underground mining and mineral transportation</p></div>
     </div>
   </section>
 
-  <!--About section-->
+  <!-- ================= ABOUT ================= -->
   <section id="about">
-  <div class="about-container">
-    <h2>About Voltra Tech</h2>
-    <p>
-      We provide comprehensive geo-science, mining, engineering, and
-      environmental services tailored to meet the diverse needs of
-      our clients. Our expertise covers geophysical surveys, solid
-      mineral exploration, mining services, borehole drilling, water
-      and treatment plant solutions, environmental impact assessments
-      (EIA), and construction services.
-    </p>
-  </div>
-</section>
-
-<!--Project section-->
-  <section id="projects">
-    <h2>PROJECTS — </h2>
-    <div class="projects">
-      <div style="background-image:url('./background/background1.jpeg')"></div>
-      <div style="background-image:url('./background/background2.jpeg')"></div>
-      <div style="background-image:url('./background/background3.jpeg')"></div>
-      <div style="background-image:url('./background/background4.jpeg')"></div>
-      <div style="background-image:url('./background/background5.jpeg')"></div>
+    <div class="about-container">
+      <h2>About VoltraTech</h2>
+      <p>
+        We provide comprehensive geo-science, mining, engineering,
+        and environmental services tailored to meet the diverse needs
+        of our clients. Our expertise covers geophysical surveys,
+        solid mineral exploration, mining services, borehole drilling,
+        water and treatment plant solutions, environmental impact
+        assessments (EIA), and construction services.
+      </p>
     </div>
   </section>
 
-  <footer id="contact">VOLTRA-TECH © 2026 — POWERING PRECISION</footer>
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects">
+    <h2>PROJECTS —</h2>
+    <div class="projects">
+      <div style="background-image: url('./background/background14.jpeg');"></div>
+      <div style="background-image: url('./background/background2.jpeg');"></div>
+      <div style="background-image: url('./background/background4.jpeg');"></div>
+      <div style="background-image: url('./background/background13.jpeg');"></div>
+      <div style="background-image: url('./background/background8.jpeg');"></div>
+      <div style="background-image: url('./background/background7.jpeg');"></div>
+    </div>
+  </section>
 
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <div class="contact-container">
+      <h2>Contact Us</h2>
+      <p class="contact-intro">Have a project in mind? We are ready to get the job done.</p>
+
+      <div class="contact-grid">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Office Address</h4>
+            <p>2, First Avenue, Kastina-Ala Street<br>Near High Level Market, High Level<br>Makurdi, Benue State, Nigeria</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=2+First+Avenue+Kastina-Ala+Street+Near+High+Level+Market+High+Level+Makurdi+Benue+State+Nigeria" target="_blank" rel="noopener noreferrer" class="map-button">📍 Open Location in Google Maps</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <h4>Email Us</h4>
+            <p><a href="mailto:info@voltratech.com">info@voltratech.com</a></p>
+            <p><a href="mailto:projects@voltratech.com">projects@voltratech.com</a></p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Call Us</h4>
+            <p><a href="tel:+2348071763938">+234 807 176 3938</a></p>
+            <p><a href="tel:+2347036484424">+234 703 648 4424</a></p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">⏰</div>
+          <div>
+            <h4>Working Hours</h4>
+            <p>Mon - Fri: 8:00 AM - 6:00 PM</p>
+            <p>Sat: 9:00 AM - 2:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps?q=2%20First%20Avenue%2C%20Kastina-Ala%20Street%2C%20High%20Level%2C%20Makurdi%2C%20Benue%20State%2C%20Nigeria&output=embed"
+          width="100%"
+          height="400"
+          style="border:0;"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Voltra-tech Location Map"
+        ></iframe>
+      </div>
+
+      <a href="mailto:info@voltratech.com?subject=Project%20Inquiry" class="contact-btn">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- ================= FLOATING WHATSAPP ================= -->
+  <a href="https://wa.me/2348071763938?text=Hello%20Voltra-tech%2C%20I%20would%20like%20to%20make%20an%20inquiry." class="floating-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Chat with Voltra-tech on WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path d="M19.11 17.2c-.27-.14-1.58-.78-1.83-.87-.25-.09-.43-.14-.61.14-.18.27-.7.87-.86 1.05-.16.18-.32.2-.59.07-.27-.14-1.13-.42-2.15-1.33-.79-.7-1.33-1.57-1.49-1.84-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.53-.45-.46-.61-.47-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.26s.98 2.62 1.11 2.8c.14.18 1.93 2.95 4.68 4.13.65.28 1.16.45 1.56.57.65.21 1.24.18 1.71.11.52-.08 1.58-.65 1.8-1.28.22-.63.22-1.17.16-1.28-.07-.11-.25-.18-.52-.32z"/>
+      <path d="M16.02 3C8.84 3 3 8.82 3 16c0 2.3.6 4.54 1.74 6.51L3 29l6.63-1.7A12.94 12.94 0 0 0 16 29c7.18 0 13-5.82 13-13S23.2 3 16.02 3zm0 23.74c-2.02 0-4-.54-5.73-1.57l-.41-.24-3.93 1.01 1.05-3.83-.27-.42A10.73 10.73 0 1 1 16.02 26.74z"/>
+    </svg>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="footer-logo">Voltra-tech</div>
+    <p>VOLTRATECH NIGERIA LIMITED © 2026 — POWERING PRECISION</p>
+  </footer>
+
+  <!-- ================= JAVASCRIPT ================= -->
   <script src="./style.js"></script>
 </body>
 </html>
